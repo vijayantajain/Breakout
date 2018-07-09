@@ -6,6 +6,9 @@ var dx = 0.5;
 var dy = 0.5;
 var ballRadius = 10;
 var randomColor = "#0095DD";
+var paddleWidth = 75;
+var paddleHeight = 10;
+var paddleX = (canvas.width - paddleWidth) / 2;
 
 function getRandomColor(){
     var rgb = "rgb(" + Math.floor(Math.random() * 256).toString(); 
@@ -14,6 +17,14 @@ function getRandomColor(){
     }
     rgb += ")";
     return rgb;
+}
+
+function drawPaddle(){
+    ctx.beginPath();
+    ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+    ctx.fillStyle = "#ff7700";
+    ctx.fill();
+    ctx.closePath();
 }
 
 function drawBall(){
@@ -27,6 +38,7 @@ function drawBall(){
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
+    drawPaddle();
     if (y + dy < ballRadius || y + dy > canvas.height-ballRadius){
         dy = (-1.08) * dy;
         randomColor = getRandomColor();
