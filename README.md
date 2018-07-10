@@ -6,7 +6,7 @@ Yet another implementation of the classic Atari game.
 
 ## How to play
 
-Go to Breakout[https://vijayantajain.github.io/breakout] page to play
+Go to [Breakout](https://vijayantajain.github.io/breakout) page to play
 
 ## Instructions
 
