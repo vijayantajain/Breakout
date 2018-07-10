@@ -10,8 +10,24 @@ var paddleHeight = 10;
 var paddleX = (canvas.width - paddleWidth) / 2;
 var rightPressed = false;
 var lefttPressed = false;
+var brickRowCount = 4;
+var brickColumnCount = 5;
+var brickWidth = 75;
+var brickHeight = 25;
+var brickPadding = 10;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
+var bricks = [];
 var ballColor = "#0095DD";
-var paddleColor = "#ff7700";
+var paddleColor = "#FF7700";
+var brickColor = "#AF3131"
+
+for(var c = 0; c < brickColumnCount; c++){
+    bricks[c] = []
+    for (var r = 0; r < brickRowCount; r++){
+        bricks[c][r] = {x: 0, y:0};
+    }
+}
 
 document.addEventListener("keydown", keyDownHandler, false)
 document.addEventListener("keyup", keyUpHandler, false)
@@ -59,11 +75,30 @@ function drawBall(){
     ctx.closePath();
 }
 
+function drawBricks() {
+    for(var c = 0; c < brickColumnCount; c++){
+        for(var r = 0; r < brickRowCount; r++){
+            var brickX = ((c * (brickWidth + brickPadding)) + brickOffsetLeft);
+            var brickY = ((r * (brickHeight + brickPadding)) + brickOffsetTop);
+
+            bricks[c][r].x = brickX;
+            bricks[c][r].y = brickY;
+
+            ctx.beginPath();
+            ctx.rect(brickX, brickY, brickWidth, brickHeight);
+            ctx.fillStyle = brickColor;
+            ctx.fill();
+            ctx.closePath();
+        }
+    }
+}
+
 function draw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     drawBall();
     drawPaddle();
+    drawBricks();
 
     if (x + dx < ballRadius || x + dx > canvas.width-ballRadius){
         dx = -dx;
