@@ -104,24 +104,17 @@ function drawBricks() {
             CONTEXT.closePath();
         }
     }
+}
 
-/**
- * The main draw loop that updates all the elements
- */
-function draw(){
-    CONTEXT.clearRect(0, 0, CANVAS.width, CANVAS.height);
+function updateBallPosition(){
 
-    drawBall();
-    drawPaddle();
-    drawBricks();
-
-    if (x + dx < BALL_RADIUS || x + dx > CANVAS.width-BALL_RADIUS){
+    if (x + dx < BALL_RADIUS || x + dx > CANVAS.width - BALL_RADIUS) {
         dx = -dx;
     }
 
-    if (y + dy < BALL_RADIUS ) {
+    if (y + dy < BALL_RADIUS) {
         dy = -dy;
-    } 
+    }
     else if (y + dy > CANVAS.height - BALL_RADIUS) {
         if (x > paddleX && x < paddleX + PADDLE_WIDTH) {
             dy = -dy;
@@ -131,16 +124,38 @@ function draw(){
             document.location.reload();
         }
     }
+    x += dx;
+    y += dy;
+}
 
-    
+function updatePaddlePosition(){
+
     if (rightPressed && paddleX < CANVAS.width - PADDLE_WIDTH) {
         paddleX += 3;
     } else if (lefttPressed && paddleX > 0) {
         paddleX -= 3;
     }
+}
 
-    x += dx;
-    y += dy;
+/**
+ * The main draw loop that updates all the elements
+ * 
+ * The function first clears the window screen to redraw everything.
+ * After `clearRect` the loop draws the ball, the paddle and then all
+ * bricks. After drawing the ball, paddle, and the bricks the loop then updates the
+ * positional parameters of the ball and the paddle. For ball, it does collision
+ * detection with the walls and the paddle. For paddle it ensures that it does not
+ * draw it beyond the canvas.
+ */
+function draw(){
+    CONTEXT.clearRect(0, 0, CANVAS.width, CANVAS.height);
+
+    drawBall();
+    drawPaddle();
+    drawBricks();
+
+    updateBallPosition();
+    updatePaddlePosition();
 }
 
 setInterval(draw, 5);
