@@ -106,6 +106,16 @@ function drawBricks() {
     }
 }
 
+function ballCollidesPaddle(){
+    let collision = false;
+
+    if (x > paddleX && x < paddleX + PADDLE_WIDTH){
+        collision = true;
+    }
+
+    return collision;
+}
+
 function updateBallPosition(){
 
     if (x + dx < BALL_RADIUS || x + dx > CANVAS.width - BALL_RADIUS) {
@@ -115,8 +125,9 @@ function updateBallPosition(){
     if (y + dy < BALL_RADIUS) {
         dy = -dy;
     }
-    else if (y + dy > CANVAS.height - BALL_RADIUS) {
-        if (x > paddleX && x < paddleX + PADDLE_WIDTH) {
+    
+    else if (y + dy > (CANVAS.height - BALL_RADIUS)) {
+        if (ballCollidesPaddle()) {
             dy = -dy;
         }
         else {
@@ -158,4 +169,4 @@ function draw(){
     updatePaddlePosition();
 }
 
-setInterval(draw, 5);
+setInterval(draw, 15);
