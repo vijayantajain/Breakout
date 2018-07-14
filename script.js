@@ -75,7 +75,7 @@ function drawPaddle(){
 }
 
 /**
- * 
+ * This function draws the blue ball at every iteration of the `draw` loop.
  */
 function drawBall(){
     CONTEXT.beginPath();
@@ -85,6 +85,9 @@ function drawBall(){
     CONTEXT.closePath();
 }
 
+/**
+ * This function draws the bricks at every iteration of the 'draw loop.
+ */
 function drawBricks() {
     for(let c = 0; c < BRICK_COLUMN_COUNT; c++){
         for(let r = 0; r < BRICK_ROW_COUNT; r++){
@@ -101,8 +104,10 @@ function drawBricks() {
             CONTEXT.closePath();
         }
     }
-}
 
+/**
+ * The main draw loop that updates all the elements
+ */
 function draw(){
     CONTEXT.clearRect(0, 0, CANVAS.width, CANVAS.height);
 
