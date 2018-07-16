@@ -139,9 +139,15 @@ function updateBallPosition(){
     y += dy;
 }
 
+/**
+ * Function updates the position of the paddle.
+ * 
+ * It checks for boundary conditions of if the paddle is not
+ * drawn out of the screen.
+ */
 function updatePaddlePosition(){
 
-    if (rightPressed && paddleX < CANVAS.width - PADDLE_WIDTH) {
+    if (rightPressed && (paddleX < CANVAS.width - PADDLE_WIDTH)) {
         paddleX += 3;
     } else if (lefttPressed && paddleX > 0) {
         paddleX -= 3;
