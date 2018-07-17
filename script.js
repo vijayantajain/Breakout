@@ -28,7 +28,7 @@ let bricks = [];
 for(let c = 0; c < BRICK_COLUMN_COUNT; c++){
     bricks[c] = []
     for (let r = 0; r < BRICK_ROW_COUNT; r++){
-        bricks[c][r] = {x: 0, y:0};
+        bricks[c][r] = {x: 0, y:0, status: 1};
     }
 }
 
@@ -85,6 +85,22 @@ function drawBall(){
     CONTEXT.closePath();
 }
 
+function brickBallCollisionDetection(){
+    for(let c = 0; c < BRICK_COLUMN_COUNT; c++) {
+        for(let r = 0; r < BRICK_ROW_COUNT; r++) {
+            let brick = bricks[c][r];
+
+            if (x > brick.x &&
+                x < brick.x + BRICK_WIDTH &&
+                y > brick.y &&
+                y < brick.y + BRICK_HEIGHT &&
+                brick.status === 1){
+                    brick.status = 0;
+                    dy = -dy;
+            }
+        }
+    }
+}
 /**
  * This function draws the bricks at every iteration of the 'draw loop.
  * 
@@ -101,12 +117,13 @@ function drawBricks() {
 
             bricks[c][r].x = brickX;
             bricks[c][r].y = brickY;
-
-            CONTEXT.beginPath();
-            CONTEXT.rect(brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT);
-            CONTEXT.fillStyle = BRICK_COLOR;
-            CONTEXT.fill();
-            CONTEXT.closePath();
+            if (bricks[c][r].status === 1){
+                CONTEXT.beginPath();
+                CONTEXT.rect(brickX, brickY, BRICK_WIDTH, BRICK_HEIGHT);
+                CONTEXT.fillStyle = BRICK_COLOR;
+                CONTEXT.fill();
+                CONTEXT.closePath();
+            }
         }
     }
 }
@@ -179,6 +196,7 @@ function draw(){
 
     updateBallPosition();
     updatePaddlePosition();
+    brickBallCollisionDetection();
 }
 
 setInterval(draw, 5);
