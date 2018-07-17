@@ -17,13 +17,14 @@ const BRICK_COLOR = "#AF3131"
 
 // Variables
 let x = CANVAS.width/2;
-let y = CANVAS.height/2;
+let y = CANVAS.height - 50;
 let dx = 1;
 let dy = -1;
 let paddleX = (CANVAS.width - PADDLE_WIDTH) / 2;
 let rightPressed = false;
 let lefttPressed = false;
 let bricks = [];
+let score = 0;
 
 for(let c = 0; c < BRICK_COLUMN_COUNT; c++){
     bricks[c] = []
@@ -62,6 +63,40 @@ function keyUpHandler(e) {
     }
 }
 
+function brickBallCollisionDetection() {
+    for (let c = 0; c < BRICK_COLUMN_COUNT; c++) {
+        for (let r = 0; r < BRICK_ROW_COUNT; r++) {
+            let brick = bricks[c][r];
+
+            if (x > brick.x &&
+                x < brick.x + BRICK_WIDTH &&
+                y > brick.y &&
+                y < brick.y + BRICK_HEIGHT &&
+                brick.status === 1) {
+                    brick.status = 0;
+                    dy = -dy;
+                    score += 2;
+
+                    if (score === BRICK_COLUMN_COUNT * BRICK_ROW_COUNT * 2){
+                        alert("You won! Congratulations");
+                        document.location.reload();
+                    }
+            }
+        }
+    }
+}
+
+/**
+ * This function draws the blue ball at every iteration of the `draw` loop.
+ */
+function drawBall() {
+    CONTEXT.beginPath();
+    CONTEXT.arc(x, y, BALL_RADIUS, 0, Math.PI * 2);
+    CONTEXT.fillStyle = BALL_COLOR;
+    CONTEXT.fill();
+    CONTEXT.closePath();
+}
+
 /**
  * This function draws the paddle `paddleX` position. The position of the paddle is modified
  * in the 'draw' loop
@@ -74,33 +109,7 @@ function drawPaddle(){
     CONTEXT.closePath();
 }
 
-/**
- * This function draws the blue ball at every iteration of the `draw` loop.
- */
-function drawBall(){
-    CONTEXT.beginPath();
-    CONTEXT.arc(x, y, BALL_RADIUS, 0, Math.PI * 2);
-    CONTEXT.fillStyle = BALL_COLOR;
-    CONTEXT.fill();
-    CONTEXT.closePath();
-}
 
-function brickBallCollisionDetection(){
-    for(let c = 0; c < BRICK_COLUMN_COUNT; c++) {
-        for(let r = 0; r < BRICK_ROW_COUNT; r++) {
-            let brick = bricks[c][r];
-
-            if (x > brick.x &&
-                x < brick.x + BRICK_WIDTH &&
-                y > brick.y &&
-                y < brick.y + BRICK_HEIGHT &&
-                brick.status === 1){
-                    brick.status = 0;
-                    dy = -dy;
-            }
-        }
-    }
-}
 /**
  * This function draws the bricks at every iteration of the 'draw loop.
  * 
@@ -177,6 +186,12 @@ function updatePaddlePosition(){
     }
 }
 
+function drawScore(){
+    CONTEXT.font = "16px Arial";
+    CONTEXT.fillStyle = "#0095DD";
+    CONTEXT.fillText("Score: " + score, 8, 20);
+}
+
 /**
  * The main draw loop that updates all the elements
  * 
@@ -190,9 +205,11 @@ function updatePaddlePosition(){
 function draw(){
     CONTEXT.clearRect(0, 0, CANVAS.width, CANVAS.height);
 
+
     drawBall();
     drawPaddle();
     drawBricks();
+    drawScore();
 
     updateBallPosition();
     updatePaddlePosition();
