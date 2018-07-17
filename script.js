@@ -87,6 +87,11 @@ function drawBall(){
 
 /**
  * This function draws the bricks at every iteration of the 'draw loop.
+ * 
+ * It draws the brick column-wise.
+ * 
+ * The function first finds the coordinates of the brick rectangular based
+ * on its position and the padding then it saves in the `bricks` var
  */
 function drawBricks() {
     for(let c = 0; c < BRICK_COLUMN_COUNT; c++){
@@ -117,15 +122,16 @@ function ballCollidesPaddle(){
 }
 
 function updateBallPosition(){
-
+    // If the ball collides with the wall on the sides
     if (x + dx < BALL_RADIUS || x + dx > CANVAS.width - BALL_RADIUS) {
         dx = -dx;
     }
-
+    // If the ball collides with the top wall
     if (y + dy < BALL_RADIUS) {
         dy = -dy;
     }
-    
+    // If the ball collides with the paddle then change the direction
+    // else say game over
     else if (y + dy > (CANVAS.height - BALL_RADIUS)) {
         if (ballCollidesPaddle()) {
             dy = -dy;
@@ -175,4 +181,4 @@ function draw(){
     updatePaddlePosition();
 }
 
-setInterval(draw, 15);
+setInterval(draw, 5);
