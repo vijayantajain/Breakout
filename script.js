@@ -214,6 +214,7 @@ function draw(){
     updateBallPosition();
     updatePaddlePosition();
     brickBallCollisionDetection();
+    requestAnimationFrame(draw);
 }
 
-setInterval(draw, 5);
+draw();
