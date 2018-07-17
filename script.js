@@ -26,6 +26,7 @@ let lefttPressed = false;
 let bricks = [];
 let score = 0;
 
+//Initialize the bricks array
 for(let c = 0; c < BRICK_COLUMN_COUNT; c++){
     bricks[c] = []
     for (let r = 0; r < BRICK_ROW_COUNT; r++){
@@ -63,16 +64,23 @@ function keyUpHandler(e) {
     }
 }
 
+/**
+ * This function detects collision with all the bricks
+ * 
+ * It loops through all the bricks and then compares if the
+ * center of the ball is within the bounding area of the brick.
+ * If it is then it considers a collision. After detecting collision
+ * it changes the status of the brick and increases the score.
+ * In case all the bricks have been hit it displays a "You have won"
+ * message.
+ */
+
 function brickBallCollisionDetection() {
     for (let c = 0; c < BRICK_COLUMN_COUNT; c++) {
         for (let r = 0; r < BRICK_ROW_COUNT; r++) {
             let brick = bricks[c][r];
 
-            if (x > brick.x &&
-                x < brick.x + BRICK_WIDTH &&
-                y > brick.y &&
-                y < brick.y + BRICK_HEIGHT &&
-                brick.status === 1) {
+            if (ballCollidesBrick(brick)) {
                     brick.status = 0;
                     dy = -dy;
                     score += 2;
@@ -84,6 +92,27 @@ function brickBallCollisionDetection() {
             }
         }
     }
+}
+
+/**
+ * This function compares detects collision between a given brick
+ * and the ball
+ * @param {BRICK} brick The brick object
+ * 
+ * It compares if the center of the ball is within the bounding box
+ * of the brick, if it is then it is considered a collision.
+ */
+function ballCollidesBrick(brick){
+    let collision = false;
+    if (x > brick.x &&
+        x < brick.x + BRICK_WIDTH &&
+        y > brick.y &&
+        y < brick.y + BRICK_HEIGHT &&
+        brick.status === 1) {
+            collision = true;
+        }
+    
+    return collision;
 }
 
 /**
@@ -137,6 +166,12 @@ function drawBricks() {
     }
 }
 
+/**
+ * A simple collision detection function for ball and paddle
+ * where it checks if the center of the ball is within the left
+ * and right edge of the paddle. If it is then it does collide
+ * with the paddle
+ */
 function ballCollidesPaddle(){
     let collision = false;
 
@@ -147,6 +182,13 @@ function ballCollidesPaddle(){
     return collision;
 }
 
+/**
+ * Detects collision with the walls
+ * 
+ * The first condition checks for collision with the side walls
+ * The second checks for collision with the top wall and the last
+ * one checks for collision with the floor and paddle
+ */
 function updateBallPosition(){
     // If the ball collides with the wall on the sides
     if (x + dx < BALL_RADIUS || x + dx > CANVAS.width - BALL_RADIUS) {
@@ -186,6 +228,9 @@ function updatePaddlePosition(){
     }
 }
 
+/**
+ * Draw the score
+ */
 function drawScore(){
     CONTEXT.font = "16px Arial";
     CONTEXT.fillStyle = "#0095DD";
