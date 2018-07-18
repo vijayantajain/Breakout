@@ -2,12 +2,12 @@
 
 Yet another implementation of the classic Atari game.
 
-**NOTE** - Still in progress! Requires several updates
+Based on the [Mozzila 2D Game Development tutorial](https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript).
 
-## How to play
+## Where to play
 
-Go to [Breakout](https://vijayantajain.github.io/breakout) page to play
+Go to [Breakout](https://vijayantajain.github.io/breakout) page to play the game
 
 ## Instructions
 
-Use `leftKey` to move the paddle to the left and `rightKey` to move the paddle to the right.
+Use the `left` and the `right` keys to move the paddle.
