@@ -18,8 +18,8 @@ const BRICK_COLOR = "#AF3131"
 // Variables
 let x = CANVAS.width/2;
 let y = CANVAS.height - 50;
-let dx = 1;
-let dy = -1;
+let dx = 2;
+let dy = -2;
 let paddleX = (CANVAS.width - PADDLE_WIDTH) / 2;
 let rightPressed = false;
 let lefttPressed = false;
