@@ -2,7 +2,7 @@
 
 Yet another implementation of the classic Atari game.
 
-![](screenshot.jpg)
+![Screenshot](screenshot.jpg)
 
 Based on the [Mozzila 2D Game Development tutorial](https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript).
 
