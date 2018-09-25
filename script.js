@@ -34,8 +34,7 @@ for(let c = 0; c < BRICK_COLUMN_COUNT; c++){
     }
 }
 
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
+//Functions
 
 /**
  * This function handles the event when a key is pressed. It changes the
@@ -43,13 +42,13 @@ document.addEventListener("keyup", keyUpHandler, false);
  * @param {Event} e The event passed by the addEventListener function
  */
 function keyDownHandler(e) {
-    if (e.keyCode == 39) {
+    if (e.keyCode === 39) {
         rightPressed = true;
-    }
-    else if (e.keyCode == 37) {
+    } else if (e.keyCode === 37) {
         lefttPressed = true;
     }
 }
+
 /**
  * This function handles the event when the key is released after being pressed
  * It releases
@@ -58,10 +57,30 @@ function keyDownHandler(e) {
 function keyUpHandler(e) {
     if (e.keyCode == 39) {
         rightPressed = false;
-    }
-    else if (e.keyCode == 37) {
+    } else if (e.keyCode == 37) {
         lefttPressed = false;
     }
+}
+
+/**
+ * This function compares detects collision between a given brick
+ * and the ball
+ * @param {BRICK} brick The brick object
+ * 
+ * It compares if the center of the ball is within the bounding box
+ * of the brick, if it is then it is considered a collision.
+ */
+function ballCollidesBrick(brick) {
+    let collision = false;
+    if (x > brick.x &&
+        x < brick.x + BRICK_WIDTH &&
+        y > brick.y &&
+        y < brick.y + BRICK_HEIGHT &&
+        brick.status === 1) {
+        collision = true;
+    }
+
+    return collision;
 }
 
 /**
@@ -81,39 +100,22 @@ function brickBallCollisionDetection() {
             let brick = bricks[c][r];
 
             if (ballCollidesBrick(brick)) {
-                    brick.status = 0;
-                    dy = -dy;
-                    score += 2;
+                brick.status = 0;
+                dy = -dy;
+                score += 2;
 
-                    if (score === BRICK_COLUMN_COUNT * BRICK_ROW_COUNT * 2){
-                        alert("You won! Congratulations");
-                        document.location.reload();
-                    }
+                if (score === BRICK_COLUMN_COUNT * BRICK_ROW_COUNT * 2) {
+                    alert("You won! Congratulations");
+                    document.location.reload();
+                }
             }
         }
     }
 }
 
-/**
- * This function compares detects collision between a given brick
- * and the ball
- * @param {BRICK} brick The brick object
- * 
- * It compares if the center of the ball is within the bounding box
- * of the brick, if it is then it is considered a collision.
- */
-function ballCollidesBrick(brick){
-    let collision = false;
-    if (x > brick.x &&
-        x < brick.x + BRICK_WIDTH &&
-        y > brick.y &&
-        y < brick.y + BRICK_HEIGHT &&
-        brick.status === 1) {
-            collision = true;
-        }
-    
-    return collision;
-}
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
 
 /**
  * This function draws the blue ball at every iteration of the `draw` loop.
