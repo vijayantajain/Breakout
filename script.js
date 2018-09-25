@@ -13,7 +13,7 @@ const BRICK_OFFSET_TOP = 30;
 const BRICK_OFFSET_LEFT = 30;
 const BALL_COLOR = "#0095DD";
 const PADDLE_COLOR = "#FF7700";
-const BRICK_COLOR = "#AF3131"
+const BRICK_COLOR = "#AF3131";
 
 // Variables
 let x = CANVAS.width/2;
@@ -28,14 +28,14 @@ let score = 0;
 
 //Initialize the bricks array
 for(let c = 0; c < BRICK_COLUMN_COUNT; c++){
-    bricks[c] = []
+    bricks[c] = [];
     for (let r = 0; r < BRICK_ROW_COUNT; r++){
         bricks[c][r] = {x: 0, y:0, status: 1};
     }
 }
 
-document.addEventListener("keydown", keyDownHandler, false)
-document.addEventListener("keyup", keyUpHandler, false)
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
 
 /**
  * This function handles the event when a key is pressed. It changes the
